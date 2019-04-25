@@ -1,0 +1,37 @@
+{
+    "name": "convenia/graphqlclient",
+    "description": "Pacote para realizar chamadas HTTP para GraphQL utilizando OO",
+    "license": "proprietary",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Kauan Sousa",
+            "email": "kauanslr@gmail.com"
+        },
+        {
+            "name": "Convenia",
+            "email": "contato@convenia.com.br"
+        }
+
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "6.*",
+        "laravel/framework": ">=5.5"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ],
+        "psr-4": {
+            "Convenia\\GraphQLClient\\": "src/GraphQLClient/"
+        }
+    },
+    "config":{
+        "preferred-install": "dist"
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
