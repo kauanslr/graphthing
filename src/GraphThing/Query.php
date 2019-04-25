@@ -1,6 +1,6 @@
 <?php
 
-namespace Convenia\GraphQLClient;
+namespace Kauanslr\GraphThing;
 
 class Query extends Field
 {

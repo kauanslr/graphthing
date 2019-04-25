@@ -1,6 +1,6 @@
 <?php
 
-namespace Convenia\GraphQLClient;
+namespace Kauanslr\GraphThing;
 
 use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 use Illuminate\Foundation\Application;

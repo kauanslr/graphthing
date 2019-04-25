@@ -1,4 +1,4 @@
-# Convenia GraphQLClient
+# GraphThing
 
 ---
 
@@ -11,15 +11,8 @@ Para instalar adicione o seguinte código em seu ```composer.json```
 ```json
 {
     "require": {
-        "convenia/graphqlclient": "^0.2"
-    },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@gitlab.com:convenia/rh/libs/graphqlclient.git",
-            "no-api": true
-        }
-    ]
+        "kauanslr/graphthing": "^0.2"
+    }
 }
 
 ```
@@ -29,7 +22,7 @@ Depois execute ```composer update```
 ## Utilização
 
 ```php
-use Convenia\GraphQLClient\Traits\MakeGraphQLRequests;
+use Kauanslr\GraphThing\Traits\MakeGraphQLRequests;
 
 class TestMyGraphQL extends TestCase
 {

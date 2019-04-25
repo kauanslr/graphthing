@@ -1,14 +1,14 @@
 <?php
 
-namespace Convenia\GraphQLClient\Traits;
+namespace Kauanslr\GraphThing;
 
-use \Convenia\GraphQLClient\Field;
-use \Convenia\GraphQLClient\Query;
+use \Kauanslr\GraphThing\Field;
+use \Kauanslr\GraphThing\Query;
 
 /**
  * Trait MakeGraphQLRequests
  *
- * @package Convenia\GraphQLClient\Traits
+ * @package \Kauanslr\GraphThing\Traits
  */
 trait MakeGraphQLRequests
 {
@@ -18,7 +18,7 @@ trait MakeGraphQLRequests
 	protected $endpoint = '/graphql';
 
     /**
-     * @var \Convenia\GraphQLClient\Client $graphql
+     * @var \Kauanslr\GraphThing\Client $graphql
      */
 	protected $graphql;
 
@@ -61,7 +61,7 @@ trait MakeGraphQLRequests
      * @param array  $fields
      */
     private function makeRequest(string $name, array $params, array $fields) {
-        $this->graphql = new \Convenia\GraphQLClient\LaravelTestGraphQLClient(
+        $this->graphql = new \Kauanslr\GraphThing\LaravelTestGraphQLClient(
           $this->app,
             $this->endpoint
         );
@@ -86,7 +86,7 @@ trait MakeGraphQLRequests
      * @param $params
      * @param $fields
      *
-     * @return \Convenia\GraphQLClient\Query
+     * @return \Kauanslr\GraphThing\Query
      */
     protected function createQuery($name, $params, $fields): Query {
     	return new Query($name, $params, $this->mapFields($fields));

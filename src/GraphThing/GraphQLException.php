@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Convenia\GraphQLClient;
+namespace Kauanslr\GraphThing;
 
 
 class GraphQLException extends \Exception

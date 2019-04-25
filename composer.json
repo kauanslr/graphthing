@@ -1,18 +1,13 @@
 {
-    "name": "convenia/graphqlclient",
-    "description": "Pacote para realizar chamadas HTTP para GraphQL utilizando OO",
-    "license": "proprietary",
+    "name": "kauanslr/graphthing",
+    "description": "Make your life easier when testing your graphql queries and mutations",
+    "license": "MIT",
     "type": "library",
     "authors": [
         {
             "name": "Kauan Sousa",
             "email": "kauanslr@gmail.com"
-        },
-        {
-            "name": "Convenia",
-            "email": "contato@convenia.com.br"
         }
-
     ],
     "require": {
         "php": "^7.0"
@@ -26,7 +21,7 @@
             "src/"
         ],
         "psr-4": {
-            "Convenia\\GraphQLClient\\": "src/GraphQLClient/"
+            "Kauanslr\\GraphThing\\": "src/GraphThing/"
         }
     },
     "config":{
