@@ -23,31 +23,33 @@ trait MakeGraphQLRequests
     private $query;
 
     /**
-     * @param string $name
-     * @param array  $params
-     * @param array  $fields
+     * @param string $name      Mutation Name
+     * @param array  $params    Mutation parameters
+     * @param array  $fields    Query fields
+     * @param array  $headers   Custom headers
      *
      * @return mixed
      */
-    protected function graphqlMutate(string $name, array $params, array $fields)
+    protected function graphqlMutate(string $name, array $params, array $fields, $headers = [])
     {
-        $this->makeRequest($name, $params, $fields);
+        $this->makeRequest($name, $params, $fields, $headers);
 
-       	return $this->graphql->mutate($this->query)->getData();
+       	return $this->graphql->setHeaders($headers)->mutate($this->query)->getData();
     }
 
     /**
-     * @param string $name
-     * @param array  $params
-     * @param array  $fields
+     * @param string $name      Query Name
+     * @param array  $params    Query parameters
+     * @param array  $fields    Query fields
+     * @param array  $headers   Custom headers
      *
      * @return mixed
      */
-    protected function graphqlQuery(string $name, array $params, array $fields)
+    protected function graphqlQuery(string $name, array $params, array $fields, $headers = [])
     {
-        $this->makeRequest($name, $params, $fields);
+        $this->makeRequest($name, $params, $fields, $headers);
 
-        return $this->graphql->query($this->query)->getData();
+        return $this->graphql->setHeaders($headers)->query($this->query)->getData();
     }
 
     /**
@@ -56,7 +58,7 @@ trait MakeGraphQLRequests
      * @param array  $fields
      * @param array  $headers
      */
-    private function makeRequest(string $name, array $params, array $fields) {
+    private function makeRequest(string $name, array $params, array $fields, array $headers) {
         $this->graphql = new \Kauanslr\GraphThing\LaravelTestGraphQLClient(
             $this->app,
             $this->endpoint ?? '/graphql'

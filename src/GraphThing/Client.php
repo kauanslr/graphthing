@@ -12,6 +12,9 @@ abstract class Client
     /** @var array */
     protected $variables;
 
+    /** @var array */
+    private $headers;
+
     public function __construct(string $baseUrl) {
         $this->baseUrl = $baseUrl;
         $this->variables = [];
@@ -115,6 +118,17 @@ abstract class Client
 
         return $queryString;
 
+    }
+
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
+        return $this;
+    }
+
+    public function getHeaders(): array
+    {
+        return $this->headers;
     }
 
     public function executeQuery(array $data, array $multipart = null)

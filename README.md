@@ -66,7 +66,7 @@ class TestMyGraphQL extends TestCase
     ];
 
     // Campos retornados pela query
-    $fields = $this->graphqlQuery('queryName', $params, $query);
+    $fields = $this->graphqlQuery('queryName', $params, $query, $headers);
 
     //  Verifica se todos os campos solicitados foram retornados
     $this->assertGraphQLFields($fields);

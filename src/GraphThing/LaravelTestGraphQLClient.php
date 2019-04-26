@@ -36,7 +36,7 @@ class LaravelTestGraphQLClient extends Client
 
     protected function postQuery(array $data): array
     {
-        $this->response = $this->post($this->getBaseUrl(), $data);
+        $this->response = $this->post($this->getBaseUrl(), $data, $this->getHeaders());
 
         if ($this->response->getStatusCode() >= 400) {
             throw new GraphQLException(sprintf(
