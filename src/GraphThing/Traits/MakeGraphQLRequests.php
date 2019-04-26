@@ -13,11 +13,6 @@ use \Kauanslr\GraphThing\Query;
 trait MakeGraphQLRequests
 {
     /**
-     * @var string $endpoint
-     */
-	protected $endpoint = '/graphql';
-
-    /**
      * @var \Kauanslr\GraphThing\Client $graphql
      */
 	protected $graphql;
@@ -59,14 +54,13 @@ trait MakeGraphQLRequests
      * @param string $name
      * @param array  $params
      * @param array  $fields
+     * @param array  $headers
      */
     private function makeRequest(string $name, array $params, array $fields) {
         $this->graphql = new \Kauanslr\GraphThing\LaravelTestGraphQLClient(
-          $this->app,
-            $this->endpoint
+            $this->app,
+            $this->endpoint ?? '/graphql'
         );
-
-        $params = $params;
 
         $fields = $this->mapFields($fields);
 
