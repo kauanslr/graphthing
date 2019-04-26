@@ -34,6 +34,16 @@ class LaravelTestGraphQLClient extends Client
         $this->app = $app;
     }
 
+    /**
+     * Return the request response object.
+     *
+     * @return \Illuminate\Http\Response|\Illuminate\Foundation\Testing\TestResponse
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
     protected function postQuery(array $data): array
     {
         $this->response = $this->post($this->getBaseUrl(), $data, $this->getHeaders());
