@@ -1,6 +1,6 @@
 <?php
 
-namespace Kauanslr\GraphThing;
+namespace Kauanslr\GraphThing\Traits;
 
 use \Kauanslr\GraphThing\Field;
 use \Kauanslr\GraphThing\Query;
