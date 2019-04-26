@@ -73,3 +73,32 @@ class TestMyGraphQL extends TestCase
   }
 }
 ```
+
+Também é possível utilizar as respostas utilizando a interface padrão do Laravel:
+
+```php
+use Kauanslr\GraphThing\Traits\MakeGraphQLRequests;
+
+class TestMyGraphQL extends TestCase
+{
+    use MakeGraphQLRequests;
+
+  /** @var Endpoint */
+  protected $endpoint = '/your_graphql_endpoint' //Default '/graphql';
+
+  public function test_my_first_mutation_endpoint() {
+    // Parametros para mutação
+    $params = [];
+
+    // Campos para serem retornados
+    $query = ['field_1'];
+
+    // Campos retornados pela query
+    $fields = $this->graphqlMutate('mutationName', $params, $query);
+
+    //  Retorna uma instancia de \Illuminate\Foundation\Testing\TestResponse
+    $response = $this->graphql->getResponse();
+    $response->assertStatusCode(403);
+  }
+}
+```
