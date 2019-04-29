@@ -11,7 +11,7 @@ Para instalar adicione o seguinte código em seu ```composer.json```
 ```json
 {
     "require": {
-        "kauanslr/graphthing": "^0.2"
+        "kauanslr/graphthing": "^0"
     }
 }
 
