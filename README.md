@@ -11,7 +11,7 @@ Para instalar adicione o seguinte código em seu ```composer.json```
 ```json
 {
     "require": {
-        "kauanslr/graphthing": "^0.3"
+        "kauanslr/graphthing": "^0"
     }
 }
 
@@ -76,7 +76,7 @@ class TestMyGraphQL extends TestCase
 }
 ```
 
-Também é possível utilizar interface padrão do Laravel para Request Testing:
+Também é possível utilizar a interface padrão do Laravel para Request Testing:
 
 ```php
 use Kauanslr\GraphThing\Traits\MakeGraphQLRequests;
@@ -116,7 +116,7 @@ Just add the bellow code to your ```composer.json```
 ```json
 {
     "require": {
-        "kauanslr/graphthing": "^0.3"
+        "kauanslr/graphthing": "^0"
     }
 }
 
