@@ -122,7 +122,7 @@ abstract class Client
 
     public function setHeaders(array $headers)
     {
-        $this->headers = $headers;
+        $this->headers = array_merge($headers, $this->headers);
         return $this;
     }
 
