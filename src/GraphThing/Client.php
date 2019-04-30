@@ -13,7 +13,7 @@ abstract class Client
     protected $variables;
 
     /** @var array */
-    private $headers;
+    private $headers = [];
 
     /**
      * Client constructor.
