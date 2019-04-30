@@ -2,9 +2,8 @@
 
 namespace Kauanslr\GraphThing;
 
-use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 use Illuminate\Foundation\Application;
-
+use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 
 /**
  * Class LaravelTestGraphQLClient
@@ -18,7 +17,7 @@ class LaravelTestGraphQLClient extends Client
     /** @var Application */
     private $app;
 
-    /** @var Save the http response */
+    /** @var \Illuminate\Http\Response|\Illuminate\Foundation\Testing\TestResponse Save the http response */
     private $response;
 
     /**
@@ -44,9 +43,16 @@ class LaravelTestGraphQLClient extends Client
         return $this->response;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return array
+     * @throws \Kauanslr\GraphThing\GraphQLException
+     */
     protected function postQuery(array $data): array
     {
-        $this->response = $this->post($this->getBaseUrl(), $data, $this->getHeaders());
+        $this->response = $this->post($this->getBaseUrl(), $data,
+            $this->getHeaders());
 
         if ($this->response->getStatusCode() >= 400) {
             throw new GraphQLException(sprintf(
@@ -60,7 +66,8 @@ class LaravelTestGraphQLClient extends Client
 
         if (isset($responseBody['errors'])) {
             throw new GraphQLException(sprintf(
-                'Mutation failed with error %s', json_encode($responseBody['errors'])
+                'Mutation failed with error %s',
+                json_encode($responseBody['errors'])
             ));
         }
 

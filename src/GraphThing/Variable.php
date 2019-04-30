@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kauanslr\GraphThing;
-
 
 class Variable
 {
@@ -19,11 +17,12 @@ class Variable
      * Field constructor.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      * @param string $type
+     *
      * @internal param Field[]|array $children
      */
-    public function __construct(string $name, $value, string $type = 'String')
+    public function __construct(string $name, $value, $type = 'String')
     {
         $this->name = $name;
         $this->value = $value;

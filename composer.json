@@ -24,7 +24,7 @@
             "Kauanslr\\GraphThing\\": "src/GraphThing/"
         }
     },
-    "config":{
+    "config": {
         "preferred-install": "dist"
     },
     "prefer-stable": true,

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kauanslr\GraphThing;
-
 
 class Field
 {
@@ -15,7 +13,7 @@ class Field
     /**
      * Field constructor.
      *
-     * @param string $name
+     * @param string        $name
      * @param Field[]|array $children
      */
     public function __construct(string $name, array $children = [])
@@ -32,9 +30,15 @@ class Field
         return $this->children;
     }
 
+    /**
+     * @param \Kauanslr\GraphThing\Field $field
+     *
+     * @return \Kauanslr\GraphThing\Field
+     */
     public function addChild(Field $field): Field
     {
-        $this->children []= $field;
+        $this->children [] = $field;
+
         return $this;
     }
 
