@@ -1,8 +1,12 @@
 <?php
 
-namespace Kauanslr\GraphThing;
+namespace Kauanslr\GraphThing\Clients;
 
+use Kauanslr\GraphThing\Field;
 use PHPUnit\Framework\Assert;
+use Kauanslr\GraphThing\Query;
+use Kauanslr\GraphThing\ResponseData;
+use Kauanslr\GraphThing\Exceptions\GraphQLException;
 
 abstract class Client
 {
@@ -47,10 +51,11 @@ abstract class Client
     }
 
     /**
-     * @param array      $data
+     * @param array $data
      * @param array|null $multipart
      *
      * @return mixed
+     * @throws \Kauanslr\GraphThing\Exceptions\GraphQLException
      */
     public function executeQuery(array $data, array $multipart = null)
     {
@@ -59,19 +64,38 @@ abstract class Client
                 $multipart);
         }
 
-        return $this->postQuery($data);
+        $this->postQuery($data);
+
+        if ($this->response->getStatusCode() >= 400) {
+            throw new GraphQLException(sprintf(
+                'Mutation failed with status code %d and error %s',
+                $this->response->getStatusCode(),
+                $this->response->getContent()
+            ));
+        }
+
+        $responseBody = json_decode($this->response->getContent(), true);
+
+        if (isset($responseBody['errors'])) {
+            throw new GraphQLException(sprintf(
+                'Mutation failed with error %s',
+                json_encode($responseBody['errors'])
+            ));
+        }
+
+        return $responseBody;
     }
 
     /**
      * @param \Kauanslr\GraphThing\Query $query
-     * @param array|null                 $multipart
+     * @param array|null $multipart
      *
      * @return \Kauanslr\GraphThing\ResponseData
+     * @throws \Kauanslr\GraphThing\Exceptions\GraphQLException
      */
     public function mutate(Query $query, array $multipart = null): ResponseData
     {
-        $response = $this->executeQuery($this->getMutationData($query),
-            $multipart);
+        $response = $this->executeQuery($this->getMutationData($query), $multipart);
 
         return new ResponseData($response['data'][$query->getName()]);
     }
@@ -80,6 +104,7 @@ abstract class Client
      * @param \Kauanslr\GraphThing\Query $query
      *
      * @return \Kauanslr\GraphThing\ResponseData
+     * @throws \Kauanslr\GraphThing\Exceptions\GraphQLException
      */
     public function query(Query $query): ResponseData
     {
@@ -108,8 +133,8 @@ abstract class Client
     }
 
     /**
-     * @param \Kauanslr\GraphThing\Field $field
-     * @param array                      $result
+     * @param \Kauanslr\GraphThing\Clients\Field $field
+     * @param array $result
      */
     protected function assertFieldInArray(Field $field, array $result)
     {
@@ -133,7 +158,7 @@ abstract class Client
      *
      * @return array
      */
-    abstract protected function postQuery(array $data): array;
+    abstract protected function postQuery(array $data): void;
 
     /**
      * @param \Kauanslr\GraphThing\Query $query
@@ -277,4 +302,5 @@ abstract class Client
 
         return $result;
     }
+
 }

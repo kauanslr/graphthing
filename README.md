@@ -23,6 +23,11 @@ ou apenas execute ```$ composer require --dev kauanslr/graphthing```
 
 ## Utilização
 
+Suporte para endpoints externos 
+
+___
+
+
 ```php
 use Kauanslr\GraphThing\Traits\MakeGraphQLRequests;
 
@@ -127,6 +132,10 @@ And run ```$ composer update```
 or just run ```$ composer require --dev kauanslr/graphthing```
 
 ## Using
+
+Support to external endpoints 
+
+___
 
 ```php
 use Kauanslr\GraphThing\Traits\MakeGraphQLRequests;
