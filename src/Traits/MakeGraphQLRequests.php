@@ -4,6 +4,9 @@ namespace Kauanslr\GraphThing\Traits;
 
 use Kauanslr\GraphThing\Field;
 use Kauanslr\GraphThing\Query;
+use Kauanslr\GraphThing\Clients\Client;
+use Kauanslr\GraphThing\Clients\GuzzleGraphQLClient;
+use Kauanslr\GraphThing\Clients\LaravelTestGraphQLClient;
 
 /**
  * Trait MakeGraphQLRequests
@@ -13,7 +16,7 @@ use Kauanslr\GraphThing\Query;
 trait MakeGraphQLRequests
 {
     /**
-     * @var \Kauanslr\GraphThing\Client $graphql
+     * @var \Kauanslr\GraphThing\Clients\Client $graphql
      */
     protected $graphql;
 
@@ -23,12 +26,13 @@ trait MakeGraphQLRequests
     private $query;
 
     /**
-     * @param string $name    Mutation Name
-     * @param array  $params  Mutation parameters
-     * @param array  $fields  Query fields
-     * @param array  $headers Custom headers
+     * @param string $name Mutation Name
+     * @param array $params Mutation parameters
+     * @param array $fields Query fields
+     * @param array $headers Custom headers
      *
      * @return mixed
+     * @throws \Kauanslr\GraphThing\Exceptions\GraphQLException
      */
     protected function graphqlMutate(
         string $name,
@@ -36,19 +40,20 @@ trait MakeGraphQLRequests
         array $fields,
         $headers = []
     ) {
-        $this->makeRequest($name, $params, $fields, $headers);
+        $this->makeRequest($name, $params, $fields);
 
         return $this->graphql->setHeaders($headers)->mutate($this->query)
             ->getData();
     }
 
     /**
-     * @param string $name    Query Name
-     * @param array  $params  Query parameters
-     * @param array  $fields  Query fields
-     * @param array  $headers Custom headers
+     * @param string $name Query Name
+     * @param array $params Query parameters
+     * @param array $fields Query fields
+     * @param array $headers Custom headers
      *
      * @return mixed
+     * @throws \Kauanslr\GraphThing\Exceptions\GraphQLException
      */
     protected function graphqlQuery(
         string $name,
@@ -56,7 +61,7 @@ trait MakeGraphQLRequests
         array $fields,
         $headers = []
     ) {
-        $this->makeRequest($name, $params, $fields, $headers);
+        $this->makeRequest($name, $params, $fields);
 
         return $this->graphql->setHeaders($headers)->query($this->query)
             ->getData();
@@ -86,18 +91,13 @@ trait MakeGraphQLRequests
      * @param string $name
      * @param array  $params
      * @param array  $fields
-     * @param array  $headers
      */
     private function makeRequest(
         string $name,
         array $params,
-        array $fields,
-        array $headers
+        array $fields
     ) {
-        $this->graphql = new \Kauanslr\GraphThing\LaravelTestGraphQLClient(
-            $this->app,
-            $this->endpoint ?? '/graphql'
-        );
+        $this->graphql = $this->getClient($this->endpoint ?? '/graphql');
 
         $fields = $this->mapFields($fields);
 
@@ -125,5 +125,18 @@ trait MakeGraphQLRequests
         }
 
         return $f;
+    }
+
+    protected function getClient(string $endpoint): Client
+    {
+        return $this->isInternal($endpoint)
+            ? new LaravelTestGraphQLClient($this->app, $endpoint)
+            : new GuzzleGraphQLClient($endpoint);
+    }
+
+    private function isInternal(string $endpoint): bool
+    {
+        $components = parse_url($endpoint);
+        return empty($components['host']);
     }
 }
